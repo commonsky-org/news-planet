@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="Description"
+    CONTENT="News Planet shows today's news on a world map to surface more relevant and interesting news.">
+  <meta name="viewport" content="initial-scale=1" />
+  <title>News Planet</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/themes/light/main.css" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <script type="module">
+
+  </script>
+  <script src="https://js.arcgis.com/4.12/"></script>
+  <script>
+    var rotationAllowed = true;
+    var rotate, slideshow, slideshowInterval, setSlideshow
+    var windowHasFocus = true;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/TileLayer",
+      "esri/layers/GeoJSONLayer",
+      "esri/Basemap",
+      "esri/Graphic",
+      "esri/geometry/Point",
+      "esri/geometry/Mesh"
+    ], function (Map, SceneView, TileLayer, GeoJSONLayer, Basemap, Graphic, Point, Mesh) {
+
+      const R = 6358137; // approximate radius of the Earth in m
+      const offset = 300000; // offset from the ground used for the clouds
+      const geojsonUrl = "https://storage.googleapis.com/news_tlw9mssph/news/latest-geo.json";
+      //const geojsonUrl = "latest-geo.json";
+      
+      var features;
+      var featureCounter = -1;
+
+      const basemap = new Basemap({
+        baseLayers: [
+          new TileLayer({
+            url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/terrain_with_heavy_bathymetry/MapServer"
+            //url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+            //url: "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer"
+          })
+        ]
+      });
+
+      const map = new Map({
+        basemap: basemap
+      });
+
+      const view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            position: "top-right",
+            breakpoint: false,
+            buttonEnabled: false
+          },
+          collapseEnabled: false
+        },
+        highlightOptions: {
+          color: [255, 255, 255],
+          haloOpacity: 0.5
+        }
+      });
+
+      const boundriesLayer = new TileLayer({
+        //url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/terrain_with_heavy_bathymetry/MapServer"
+        //url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+        url: "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer"
+      });
+
+      map.layers.add(boundriesLayer);
+
+      const cloudsSphere = Mesh.createSphere(new Point({
+        x: 0, y: -90, z: -(2 * R + offset)
+      }), {
+        size: 2 * (R + offset),
+        material: {
+          colorTexture: './clouds-nasa.png',
+          doubleSided: false
+        },
+        densificationFactor: 4
+      });
+
+      cloudsSphere.components[0].shading = "flat";
+
+      const clouds = new Graphic({
+        geometry: cloudsSphere,
+        symbol: {
+          type: "mesh-3d",
+          symbolLayers: [{ type: "fill" }]
+        }
+      });
+
+      view.graphics.add(clouds);
+
+      const extremesLayer = new GeoJSONLayer({
+        url: geojsonUrl,
+        elevationInfo: {
+          mode: "absolute-height",
+          offset: 300001
+        },
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "point-3d",
+            symbolLayers: [ {
+              type: "icon",
+              resource: { primitive: "circle" },
+              material: { color: [200, 200, 200, 1] },
+              outline: { color: [255, 255, 255, .5], size: 10 },
+              size: 20
+            }]
+          }
+        },
+        popupTemplate: {
+          title: "{name}",
+          content: popupContent,
+          outFields: ["*"]
+        }
+      });
+
+      map.layers.add(extremesLayer);
+      //map.disableMapNavigation();
+
+      view.watch("updating", function (value) {
+        if (!value) {
+          if (view.scale < 7578906) {
+            console.log("view " + view.scale + " needs to be reset!");
+            view.goTo(
+              {
+                scale: 8000000
+              }
+            );
+          }
+        }
+      });
+
+      view.on("click", (event) => {
+        view.hitTest(event).then((response) => {
+          
+          const camera = view.camera.clone();
+          camera.position.longitude = response.ground.mapPoint.longitude;
+          camera.position.latidude = response.ground.mapPoint.latidude;
+          view.goTo(camera, { animate: true });
+        
+        });
+      });
+
+      view.on("key-down", function (event) {
+        // prevents panning with the arrow keys
+        var keyPressed = event.key;
+        if (keyPressed.slice(0, 5) === "Arrow") {
+          event.stopPropagation();
+        }
+      });
+
+      fetch(geojsonUrl)
+        .then(response => response.json())
+        .then(data => {
+          features = data.features;
+          featureCounter = getRandomInt(-1, features.length -1)
+          //shuffleArray(features)
+          setTimeout(() => {
+            slideshow(true, true);
+          }, 2000);
+
+          setSlideshow();
+        });
+
+      slideshow = function (autoRotate, moveForward) {
+        if(moveForward) {
+          featureCounter++;
+          if (featureCounter >= features.length) featureCounter = 0;
+        }
+        else {
+          featureCounter--;
+          if (featureCounter < 0) featureCounter = features.length - 1;
+        }
+
+        var origRotationAllowed = rotationAllowed;
+        rotationAllowed = false;
+        //featureCounter = newFeatureIndex;
+        //if (featureCounter >= features.features.length) featureCounter = 0;
+
+        const camera = view.camera.clone();
+        camera.position.longitude = features[featureCounter].geometry.coordinates[0];
+        camera.position.latitude = features[featureCounter].geometry.coordinates[1];
+        view.goTo(camera, { animate: true });
+
+        setTimeout(() => {
+
+          view.hitTest(
+            {
+              type: "click",
+              x: window.innerWidth / 2,
+              y: window.innerHeight / 2
+            }
+          ).then((response) => {
+            view.popup.open({
+              location: response.results[0].graphic.geometry,
+              features: [response.results[0].graphic]
+            });
+
+            //if (origRotationAllowed && autoRotate) {
+              rotationAllowed = true;
+              document.getElementById("playButton").classList.add("esri-icon-pause");
+              document.getElementById("playButton").classList.remove("esri-icon-play");
+              rotate();
+            // }
+            // else {
+            //   document.getElementById("playButton").classList.remove("esri-icon-pause");
+            //   document.getElementById("playButton").classList.add("esri-icon-play");
+            // }
+          });
+          // view.emit("click", point);
+        }, 1000);
+      };
+
+      setSlideshow = function () {
+        if (slideshowInterval) clearInterval(slideshowInterval);
+        slideshowInterval = setInterval(() => {
+          if (rotationAllowed && windowHasFocus)
+            slideshow(true, true);
+        }, 25000);
+      }
+
+      rotate = function () {
+        if (!view.interacting && rotationAllowed) {
+          const camera = view.camera.clone();
+          camera.position.longitude -= 0.02;
+          view.goTo(camera, { animate: false });
+          requestAnimationFrame(rotate);
+        }
+        else if (rotationAllowed) {
+          rotationAllowed = false;
+          document.getElementById("playButton").classList.remove("esri-icon-pause");
+          document.getElementById("playButton").classList.add("esri-icon-play");
+        }
+      }
+
+      function popupContent(feature) {
+
+        var attributes = features[featureCounter].properties;
+        if (feature.graphic && feature.graphic.attributes && feature.graphic.attributes.description) {
+          if (rotationAllowed) playpause();
+          attributes = feature.graphic.attributes
+        }
+
+        var div = document.createElement("div");
+        var cityName = attributes.name.split(", ")[0]
+        var content = `
+          <div style="margin-left: 12px;">
+            <a title="Get more info from Wikipedia" target="_blank" href="https://en.wikipedia.org/wiki/Special:Search/` + cityName + `"><img style="width: 30px;" src="wikipedia.ico"></a>
+            <a title="Get more info from Encyclopedia Britannica" target="_blank" href="https://www.britannica.com/search?query=` + cityName + `"><img style="width: 25px;position:relative;top:-1px;" src="britannica.ico"></a>
+            <a title="Get more info from the World Digital Library" target="_blank" href="https://www.wdl.org/en/search/?q=` + cityName + `"><img style="width: 25px;position:relative;top:-1px;left:1px;" src="wdl.ico"></a>
+
+            </div>
+          <div class="popupImage">
+            <img src="` + attributes.imageUrl + `" alt="{imageCaption}"/>
+          </div>
+          <div class="popupDescription">`;
+
+        var titles = attributes.title.split("::");
+        var links = attributes.sourceUrl.split("::");
+        var icons = attributes.icon.split("::");
+
+        for (i = 0; i < titles.length; i++) {
+          content += `
+        <p class="info"><img src="` + icons[i] + `" style="height: 18px; position: relative; top: 2px; left: -2px;" /><a target="_blank" href="` + links[i] + `">` + titles[i] + `</a></p>
+        `;
+        }
+
+        content += `</div>`;
+
+        div.innerHTML = content;
+
+        return div;
+      }
+    });
+
+    function playpause() {
+      if (!rotationAllowed) {
+        rotationAllowed = true;
+        document.getElementById("playButton").classList.add("esri-icon-pause");
+        document.getElementById("playButton").classList.remove("esri-icon-play");
+
+        rotate();
+      }
+      else {
+        rotationAllowed = false;
+        document.getElementById("playButton").classList.remove("esri-icon-pause");
+        document.getElementById("playButton").classList.add("esri-icon-play");
+      }
+    }
+
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    document.addEventListener("keydown", event => {
+      console.log(event.keyCode);
+      if (event.keyCode == 39 || event.keyCode == 38 || event.keyCode == 40) {
+        setSlideshow();
+        slideshow(false, true);
+      }
+      else if (event.keyCode == 37) {
+        setSlideshow();
+        slideshow(false, false);
+      }
+      else if (event.keyCode == 32) {
+        playpause();
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      windowHasFocus = false;
+    });
+
+    window.addEventListener('focus', () => {
+      windowHasFocus = true;
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="dashboard">
+    <div class="esri-widget--button" onclick="playpause();" title="Click to play/pause news slideshow [space]">
+      <span id="playButton" class="esri-icon-pause"></span>
+    </div>
+    <div class="esri-widget--button" onclick="slideshow(false, true);"
+      title="Click to jump to a random location [arrow keys]">
+      <span id="nextButton" class="esri-icon-collapse"></span>
+    </div>
+    <div class="esri-widget--button" onclick="">
+      <a id="aboutButton" class="esri-icon-description btn" href="#open-modal"></a>
+    </div>
+  </div>
+  <div id="logo">
+  </div>
+  <div id="open-modal" class="modal-window">
+    <div>
+      <a href="#" title="Close" class="modal-close">Close</a>
+      <h1>🪐 News Planet</h1>
+      <div>This is an experiment to visualize the news on a rotating globe. Do you have ideas or suggestions how to improve this app? <br><br>Reach out by creating an issue in the GitHub repo here: <a href="https://github.com/ianua-app/news-planet" target="_blank">planet-news</a>, or visit our blog for more info here: 👉 <a href="https://ianua.app" target="_blank">ianua.app</a>
+      </div>
+    </div>
+</body>
+
+</html>

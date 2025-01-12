@@ -1,0 +1,209 @@
+html,
+body,
+#viewDiv,
+#container {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  color: #323232;
+  font-family: "Avenir Next W00", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+/* popup styling */
+
+.esri-popup__content {
+  margin: 0;
+}
+
+.esri-popup__header-title {
+  font-size: 18px;
+}
+
+.esri-popup__footer {
+  display: none;
+}
+
+.esri-feature__main-container .popupImage {
+  max-height: 250px;
+  overflow: hidden;
+}
+
+.popupImage > img {
+  width: 100%;
+}
+
+.popupImageCaption {
+  text-align: center;
+  font-size: 0.9em;
+  padding: 0.1em 1.5em 0;
+}
+
+.popupDescription {
+  padding: 2em;
+}
+
+p.info {
+  margin-bottom: 2em;
+  font-size: 1.1em;
+}
+
+.popupDescription > p:last-child {
+  margin-bottom: 0;
+}
+
+.popupCredits {
+  font-size: 0.8em;
+  padding: 0 2.5em 0.5em 2.5em;
+}
+
+#dashboard {
+  background-color: #fff;
+  position: fixed;
+  left: 14px;
+  top: 208px;
+}
+
+#logo {
+  background-color: transparent;
+  position: fixed;
+  left: 14px;
+  bottom: 20px;
+  opacity: .5;
+}
+
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: white;
+}
+.modal-window header {
+  font-weight: bold;
+}
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+.modal-close:hover {
+  color: black;
+}
+
+/* Demo Styles */
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* body {
+  font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #7f53ac 0, #657ced 100%);
+  color: black;
+} */
+
+a {
+  color: inherit;
+}
+
+.container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.modal-window > div {
+  border-radius: 1rem;
+}
+
+.modal-window div:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+
+small {
+  color: lightgray;
+}
+
+.btn {
+  background-color: white;
+  padding: 1em 1.5em;
+  border-radius: 1rem;
+  text-decoration: none;
+}
+.btn i {
+  padding-right: 0.3em;
+}
+
+.esri-popup__main-container {
+  border-radius: 30px;
+  opacity: .95;
+  max-height: 97%;
+}
+
+.esri-popup__content {
+  border-radius: 30px;
+}
+
+.esri-ui-corner .esri-component {
+  border-radius: 5px;
+}
+
+.esri-widget--button {
+  border-radius: 5px;
+}
+
+#dashboard {
+  border-radius: 5px;
+}
+
+.esri-popup__header-title {
+  word-break: normal;
+}
+
+.esri-popup--is-docked {
+  margin-bottom: 0px;
+}
+
+.esri-popup--is-docked-top-left .esri-popup__main-container, .esri-popup--is-docked-top-right .esri-popup__main-container, .esri-popup--is-docked-bottom-left .esri-popup__main-container, .esri-popup--is-docked-bottom-right .esri-popup__main-container {
+  max-height: 97%;
+}

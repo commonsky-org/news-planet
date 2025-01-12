@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [{
+      "type": "Feature",
+      "properties": {
+        "name": "Afghanistan",
+        "description": "Afghanistan Live Updates: U.S. Orders Commercial Airlines to Ferry Afghan Evacuees;This Is How the U.S.'s Afghanistan Exit Plan Unraveled",
+        "imageUrl": "https://img.zeit.de/politik/ausland/2021-08/afghanistan-kabul-taliban-regierungssprecher/wide__450x253__mobile__scale_2",
+        "source": "NYTimes.com;NYTimes.com",
+        "sourceUrl": "https://www.nytimes.com/live/2021/08/22/world/taliban-afghanistan-biden-news/;https://www.nytimes.com/live/2021/08/22/world/taliban-afghanistan-biden-news/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          86.925061,
+          27.988271
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Israel",
+        "description": "Israeli aircraft strike Hamas sites in Gaza as hostilities escalate",
+        "imageUrl": "https://restcountries.eu/data/dza.svg",
+        "source": "TheGuardian.com",
+        "sourceUrl": "https://www.theguardian.com/world/2021/aug/21/24-wounded-as-israel-fires-on-palestinian-border-demonstrators"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.851612,
+          31.046051 
+        ]
+      }
+    }
+  ]
+}

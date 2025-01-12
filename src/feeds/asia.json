@@ -1,0 +1,15 @@
+[
+  {
+    "name": "China News Service (CNS)",
+    "feed": "http://www.ecns.cn/rss/rss.xml",
+    "countryCode": "zh",
+    "country": "China",
+    "region": "China",
+    "state": "Beijing",
+    "city": "Beijing",
+    "language": "en",
+    "icon": "https://www.ecns.cn/favicon.ico",
+    "dateFormat": "%Y-%m-%d %H:%M:%S",
+    "exclusionWords": []
+  }
+]

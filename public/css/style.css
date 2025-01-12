@@ -1,0 +1,130 @@
+/* PAGE */
+
+body {
+  margin: 0px;
+  font-family: var(--sl-font-sans);
+}
+
+h2 {
+  text-align: left;
+  padding-left: 30px;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+/* PAGE END */
+
+/* HEADER BAR */
+
+.headerbar {
+  height: 64px;
+  font-weight: 500;
+  color: var(--sl-color-primary-500);
+  background-color: var(--sl-color-neutral-0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.headerbar-title {
+  position: relative;
+  top: 17px;
+  left: 8px;
+  font-size: 20pt;
+  font-weight: 600;
+}
+
+.headerar-menu {
+  text-align: center;
+}
+
+.headerbar-left-buttons {
+  float: right;
+}
+
+.open-map-button {
+  margin-top: 10px;
+  margin-right: 15px;
+  height: 45px;
+  color: var(--sl-color-primary-500);
+  background-color: var(--sl-color-neutral-200);
+  border-radius: 15px;
+  border-width: 0px;
+  font-weight: 600;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* HEADER BAR END*/
+
+/* SECTIONS */
+.section-title {
+  fill: var(--sl-color-neutral-900);
+  position: relative;
+  top: 4px;
+}
+/* SECTIONS END */
+
+/* CARD */
+.card-container {
+  text-align: center;
+  font-family: var(--sl-font-sans);
+  max-width: 1400px;
+  margin: auto;
+  background-color: var(--sl-color-neutral-0);
+  border-radius: 25px;
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1400px) {
+  .card-container {
+    margin-left: 2vw;
+    margin-right: 2vw;
+  }
+}
+
+.card-overview {
+  margin: 5px;
+  max-width: 300px;
+  text-align: left;
+  margin: 10px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.card-overview small {
+  color: var(--sl-color-neutral-500);
+}
+
+.card-overview [slot='footer'] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;headerbar-left-buttons
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.card-hero {
+  font-size: 155px; 
+  overflow: hidden; 
+  color: lightgray; 
+  font-weight: bold; 
+  max-height: 130px; 
+  opacity: 50%;
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  border-radius: 3px;
+}
+
+.card-tags {
+  width: 100%;
+  font-size: 10px;
+  margin: 4px;
+}
+/* CARD END*/

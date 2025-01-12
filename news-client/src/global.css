@@ -1,0 +1,26 @@
+apint-page:not(:defined) {
+  display: none;
+  visibility: hidden;
+}
+
+body {
+  margin: 0px;
+}
+
+h2 {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.container_wrap {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 4px 4px 14px 4px;
+  width: 100%;
+  justify-content: center;
+}

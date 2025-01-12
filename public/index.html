@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>Tiny News</title>
+    <link rel="icon" type="image/png" href="../favicon.png" />
+
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme:light)"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.85/dist/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme:dark)"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.85/dist/themes/dark.css"
+      onload="document.documentElement.classList.add('sl-theme-dark');"
+    />    
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.85/dist/shoelace.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    
+    <div class="headerbar">
+      <span class="headerbar-title">📰 Tiny News</span>
+      <span class="headerbar-left-buttons">
+        <button class="open-map-button" onclick=" window.open('/map','_blank')">Open Map View</button>
+      </span>
+    </div>
+
+    <sl-tab-group class="headermenu">
+      <sl-tab slot="nav" panel="africa">Africa</sl-tab>
+      <sl-tab slot="nav" panel="asia">Asia</sl-tab>
+      <sl-tab slot="nav" panel="europe">Europe</sl-tab>
+      <sl-tab slot="nav" panel="northamerica">North America</sl-tab>
+      <sl-tab slot="nav" panel="southamerica">South America</sl-tab>
+    
+      <sl-tab-panel id="northamerica" name="northamerica"></sl-tab-panel>
+      <sl-tab-panel id="southamerica" name="southamerica"></sl-tab-panel>
+      <sl-tab-panel id="europe" name="europe"></sl-tab-panel>
+      <sl-tab-panel id="africa" name="africa"></sl-tab-panel>
+      <sl-tab-panel id="asia" name="asia"></sl-tab-panel>
+    </sl-tab-group>
+  
+    <script src="js/templates.js"></script>
+
+    <script>
+      
+      newsConfig = {
+        "northamerica": "https://storage.googleapis.com/news_tlw9mssph/news/latest-news-northamerica.json",
+        "southamerica": "https://storage.googleapis.com/news_tlw9mssph/news/latest-news-southamerica.json",
+        "europe": "https://storage.googleapis.com/news_tlw9mssph/news/latest-news-europe.json",
+        "africa": "https://storage.googleapis.com/news_tlw9mssph/news/latest-news-africa.json",
+        "asia": "https://storage.googleapis.com/news_tlw9mssph/news/latest-news-asia.json"
+      }
+
+      // newsConfig = {
+      //   "northamerica": "../../src/output/latest-news-northamerica.json",
+      //   "southamerica": "../../src/output/latest-news-southamerica.json",
+      //   "europe": "../../src/output/latest-news-europe.json",
+      //   "africa": "../../src/output/latest-news-africa.json",
+      //   "asia": "../../src/output/latest-news-asia.json"
+      // }
+
+      //var newsUrl = "../../src/output/latest-news-northamerica.json"
+
+      function formatTitle(title) {
+        return title
+      }
+
+      function openLink(link) {
+        window.open(link, "_blank")  
+      }
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+      }
+
+      function loadGeo(geoKey) {
+        fetch(newsConfig[geoKey],
+          {
+            method: "GET"
+          })
+          .then(response => response.json())
+          .then(data => {
+            
+            //var regionMap = {}
+
+            for (index in data.articles) {
+              var article = data.articles[index]
+              
+              if (data.locations[article.location] &&  data.locations[article.location]["images"]) {
+                article["image"] = data.locations[article.location]["images"][getRandomInt(0, data.locations[article.location]["images"].length)]
+              }
+
+              if (article["tags"].length == 0)
+                article["tags"].push("news")
+
+              articleTime = new Date(article["published"])
+              timeDifferenceInHours = Math.floor((Date.now() - articleTime) / 1000 / 60 / 60)
+              if (timeDifferenceInHours > 48) {
+                article["published"] = Math.floor(timeDifferenceInHours / 24) + " days ago"
+              }
+              else if (timeDifferenceInHours == 1)
+                article["published"] = timeDifferenceInHours + " hour ago"
+              else
+                article["published"] = timeDifferenceInHours + " hours ago"
+
+              // if (! regionMap[article["region"]])
+              //   regionMap[article["region"]] = []
+
+              // regionMap[article["region"]].push(article)
+            }
+
+            // regionMap = Object.keys(regionMap).sort().reduce(
+            //   (obj, key) => { 
+            //     obj[key] = regionMap[key]; 
+            //     return obj;
+            //   }, 
+            //   {}
+            // );
+
+            var naElem = document.getElementById(geoKey);
+
+            //for (regionKey in regionMap) {
+              if (naElem) naElem.innerHTML += newsContentTemplate({
+                "region": geoKey,
+                "articles": data.articles
+              })
+            //}
+          });
+      }
+
+      window.onload = (event) => {
+
+        for (geoKey in newsConfig) {
+          loadGeo(geoKey)
+        }
+      };
+    </script>  
+  </body>
+</html>

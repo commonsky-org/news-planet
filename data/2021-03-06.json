@@ -1,0 +1,101 @@
+[
+    {
+        "company": "microsoft",
+        "datetime": "2021-03-07 18:06:36.947663",
+        "github_stars": 1021792,
+        "github_forks": 206223,
+        "reddit_subscribers": 66485,
+        "news_stories": 6,
+        "news_polarity": 0.04911616161616161,
+        "news_subjectivity": 0.2521464646464647,
+        "stock_price": 231.6
+    },
+    {
+        "company": "google",
+        "datetime": "2021-03-07 18:07:02.180923",
+        "github_stars": 1102624,
+        "github_forks": 253343,
+        "reddit_subscribers": 20883,
+        "news_stories": 23,
+        "news_polarity": 0.006037549407114622,
+        "news_subjectivity": 0.1974802371541502,
+        "stock_price": 2108.54
+    },
+    {
+        "company": "deutschebank",
+        "datetime": "2021-03-07 18:07:28.419484",
+        "github_stars": 0,
+        "github_forks": 0,
+        "reddit_subscribers": 0,
+        "news_stories": 4,
+        "news_polarity": 0.06818181818181818,
+        "news_subjectivity": 0.22727272727272727,
+        "stock_price": 12.71
+    },
+    {
+        "company": "adobe",
+        "datetime": "2021-03-07 18:07:50.270057",
+        "github_stars": 52596,
+        "github_forks": 12456,
+        "reddit_subscribers": 8914,
+        "news_stories": 8,
+        "news_polarity": 0.2625,
+        "news_subjectivity": 0.43125,
+        "stock_price": 440.83
+    },
+    {
+        "company": "salesforce",
+        "datetime": "2021-03-07 18:08:13.862937",
+        "github_stars": 25528,
+        "github_forks": 4803,
+        "reddit_subscribers": 31546,
+        "news_stories": 7,
+        "news_polarity": -0.014285714285714282,
+        "news_subjectivity": 0.21428571428571427,
+        "stock_price": 210.76
+    },
+    {
+        "company": "aws",
+        "datetime": "2021-03-07 18:08:37.453852",
+        "github_stars": 120071,
+        "github_forks": 34910,
+        "reddit_subscribers": 161377,
+        "news_stories": 4,
+        "news_polarity": 0.09659090909090909,
+        "news_subjectivity": 0.17613636363636365,
+        "stock_price": 3000.46
+    },
+    {
+        "company": "facebook",
+        "datetime": "2021-03-07 18:09:01.085546",
+        "github_stars": 817602,
+        "github_forks": 151362,
+        "reddit_subscribers": 49242,
+        "news_stories": 4,
+        "news_polarity": 0.08333333333333331,
+        "news_subjectivity": 0.5333333333333334,
+        "stock_price": 264.28
+    },
+    {
+        "company": "ibm",
+        "datetime": "2021-03-07 18:09:25.086898",
+        "github_stars": 36532,
+        "github_forks": 12748,
+        "reddit_subscribers": 8366,
+        "news_stories": 5,
+        "news_polarity": 0.020000000000000025,
+        "news_subjectivity": 0.49499999999999994,
+        "stock_price": 122.83
+    },
+    {
+        "company": "twitter",
+        "datetime": "2021-03-07 18:09:50.010063",
+        "github_stars": 121001,
+        "github_forks": 20423,
+        "reddit_subscribers": 62659,
+        "news_stories": 13,
+        "news_polarity": 0.0009906759906759906,
+        "news_subjectivity": 0.3986013986013986,
+        "stock_price": 66.95
+    }
+]

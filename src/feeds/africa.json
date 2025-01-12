@@ -1,0 +1,28 @@
+[
+  {
+    "name": "AllAfrica",
+    "feed": "https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf",
+    "countryCode": "za",
+    "country": "Kenya",
+    "region": "Africa",
+    "state": "Nairobi",
+    "city": "Nairobi",
+    "language": "en",
+    "icon": "https://allafrica.com/static/images/structure/favicon.ico",
+    "dateFormat": "%a, %d %b %Y %H:%M:%S %Z",
+    "exclusionWords": []
+  },
+  {
+    "name": "Africanews",
+    "feed": "http://www.africanews.com/feed/rss",
+    "countryCode": "za",
+    "country": "Congo",
+    "region": "Africa",
+    "state": "Brazzaville",
+    "city": "Brazaville",
+    "language": "en",
+    "icon": "https://www.africanews.com/favicon.ico",
+    "dateFormat": "%a, %d %b %Y %H:%M:%S %z",
+    "exclusionWords": []
+  }
+]

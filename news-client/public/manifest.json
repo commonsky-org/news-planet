@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "News Zen",
+  "short_name": "NZ",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Common news for people from around the world."
+}

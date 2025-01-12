@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Latin America Reports",
+    "feed": "https://latinamericareports.com/feed/",
+    "countryCode": "br",
+    "country": "Brazil",
+    "region": "Brazil",
+    "state": "Distrito Federal",
+    "city": "Bras\u00edlia",
+    "language": "en",
+    "icon": "https://latinamericareports.com/wp-content/uploads/2018/08/cropped-latinamerica-favicon-32x32.png",
+    "dateFormat": "%a, %d %b %Y %H:%M:%S %z",
+    "replaceTitleWords": [""],
+    "exclusionWords": []
+  }
+]

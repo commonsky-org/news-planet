@@ -1,0 +1,5 @@
+web.py
+feedparser
+requests
+google-cloud-storage
+google-cloud-aiplatform

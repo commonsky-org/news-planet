@@ -1,0 +1,37 @@
+[
+  {
+    "name": "CBC Canada",
+    "feed": "https://rss.cbc.ca/lineup/topstories.xml",
+    "active": "true",
+    "link": "https://www.cbc.ca/",
+    "countryCode": "ca",
+    "country": "Canada",
+    "region": "Canada",
+    "state": "Ontario",
+    "city": "Ottawa",
+    "language": "en",
+    "icon": "https://www.cbc.ca/favicon.ico",
+    "dateFormat": "%a, %d %b %Y %H:%M:%S %z",
+    "dateReplace": {
+      "EDT": "-0400",
+      "EST": "-0500"
+    },
+    "exampleDate": "Sun, 29 Aug 2021 07:00:00 EDT",
+    "exclusionWords": []
+  },
+  {
+    "name": "PBS",
+    "feed": "https://www.pbs.org/newshour/feeds/rss/headlines",
+    "link": "https://www.pbs.org/newshour",
+    "countryCode": "us",
+    "country": "United States",
+    "region": "United States",
+    "state": "Washington D.C.",
+    "city": "Washington D.C.",
+    "language": "en",
+    "icon": "https://play-lh.googleusercontent.com/841VQlA2JSit3fHDivhUpJZ1wxUQyVUtgwq-gsUNQho0NR0gxkXf6ur2HrughXGcLQQ",
+    "dateFormat": "%a, %d %b %Y %H:%M:%S %z",
+    "exampleDate": "Sun, 29 Aug 2021 09:00:16 +0000",
+    "exclusionWords": []
+  }
+]

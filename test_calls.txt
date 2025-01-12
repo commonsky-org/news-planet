@@ -1,0 +1,21 @@
+
+ local
+
+http://localhost:8080/news?gcswrite=true
+
+http://localhost:8080/news?gcswrite=true&outputwrite=false
+
+http://localhost:8080/news?gcswrite=false&outputwrite=true
+
+http://localhost:8080/news?gcswrite=true&outputwrite=true
+
+http://localhost:8080/news?gcswrite=false&outputwrite=true&filter=The%20Missouri
+
+# cloud
+
+https://newsservice-323709580283.europe-west4.run.app/news?gcswrite=true&outputwrite=true
+
+https://newsservice-323709580283.europe-west1.run.app/news?gcswrite=true&outputwrite=true
+
+news-tlw9mssph
+news_tlw9mssph
