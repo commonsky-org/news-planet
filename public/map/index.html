@@ -39,6 +39,8 @@
       var features;
       var featureCounter = -1;
 
+      var locations;
+
       const basemap = new Basemap({
         baseLayers: [
           new TileLayer({
@@ -116,7 +118,7 @@
               type: "icon",
               resource: { primitive: "circle" },
               material: { color: [200, 200, 200, 1] },
-              outline: { color: [255, 255, 255, .5], size: 10 },
+              outline: { color: [0, 0, 255, .5], size: 10 },
               size: 20
             }]
           }
@@ -163,17 +165,23 @@
         }
       });
 
-      fetch(geojsonUrl)
+      fetch("https://storage.googleapis.com/news_tlw9mssph/news/latest-news.json")
         .then(response => response.json())
         .then(data => {
-          features = data.features;
-          featureCounter = getRandomInt(-1, features.length -1)
-          //shuffleArray(features)
-          setTimeout(() => {
-            slideshow(true, true);
-          }, 2000);
+          locations = data.locations;
 
-          setSlideshow();
+          fetch(geojsonUrl)
+            .then(response => response.json())
+            .then(data => {
+              features = data.features;
+              featureCounter = getRandomInt(-1, features.length -1)
+              //shuffleArray(features)
+              setTimeout(() => {
+                slideshow(true, true);
+              }, 2000);
+    
+              setSlideshow();
+          });
         });
 
       slideshow = function (autoRotate, moveForward) {
@@ -257,6 +265,14 @@
 
         var div = document.createElement("div");
         var cityName = attributes.name.split(", ")[0]
+
+        // get location image
+        let imageUrl = attributes.imageUrl;
+        if (locations[attributes.name] && locations[attributes.name].images && locations[attributes.name].images.length > 0) {
+          let index = Math.floor(Math.random() * (locations[attributes.name].images.length - 1))
+          imageUrl = locations[attributes.name].images[index];
+        }
+
         var content = `
           <div style="margin-left: 12px;">
             <a title="Get more info from Wikipedia" target="_blank" href="https://en.wikipedia.org/wiki/Special:Search/` + cityName + `"><img style="width: 30px;" src="wikipedia.ico"></a>
@@ -265,7 +281,7 @@
 
             </div>
           <div class="popupImage">
-            <img src="` + attributes.imageUrl + `" alt="{imageCaption}"/>
+            <img src="` + imageUrl + `" alt="{imageCaption}"/>
           </div>
           <div class="popupDescription">`;
 
