@@ -19,7 +19,10 @@
     var rotationAllowed = true;
     var rotate, slideshow, slideshowInterval, setSlideshow
     var windowHasFocus = true;
-
+    var touchstartX;
+    var touchstartY;
+    var touchendX;
+    var touchendY;
     require([
       "esri/Map",
       "esri/views/SceneView",
@@ -274,7 +277,7 @@
         }
 
         var content = `
-          <div style="margin-left: 12px;">
+          <div id="links" style="margin-left: 12px;">
             <a title="Get more info from Wikipedia" target="_blank" href="https://en.wikipedia.org/wiki/Special:Search/` + cityName + `"><img style="width: 30px;" src="wikipedia.ico"></a>
             <a title="Get more info from Encyclopedia Britannica" target="_blank" href="https://www.britannica.com/search?query=` + cityName + `"><img style="width: 25px;position:relative;top:-1px;" src="britannica.ico"></a>
             <a title="Get more info from the World Digital Library" target="_blank" href="https://www.wdl.org/en/search/?q=` + cityName + `"><img style="width: 25px;position:relative;top:-1px;left:1px;" src="wdl.ico"></a>
@@ -353,6 +356,43 @@
     window.addEventListener('focus', () => {
       windowHasFocus = true;
     });
+
+    window.addEventListener('touchstart', (event) => {
+      touchstartX = event.changedTouches[0].screenX;
+      touchstartY = event.changedTouches[0].screenY;
+    });
+
+    window.addEventListener('touchend', (event) => {
+      touchendX = event.changedTouches[0].screenX;
+      touchendY = event.changedTouches[0].screenY;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      if (touchendX < touchstartX) {
+          console.log('Swiped Left');
+          setSlideshow();
+          slideshow(false, false);
+      }
+  
+      if (touchendX > touchstartX) {
+          console.log('Swiped Right');
+          setSlideshow();
+          slideshow(false, true);
+      }
+  
+      if (touchendY < touchstartY) {
+          console.log('Swiped Up');
+      }
+  
+      if (touchendY > touchstartY) {
+          console.log('Swiped Down');
+      }
+  
+      if (touchendY === touchstartY) {
+          console.log('Tap');
+      }
+    }
   </script>
 </head>
 
