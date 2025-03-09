@@ -369,18 +369,18 @@
     });
 
     function handleGesture() {
-      if ((touchendX < touchstartX) && (touchstartX - touchendX > 20)) {
+      if ((touchendX < touchstartX) && (touchstartX - touchendX > 30)) {
           console.log('Swiped Left');
           setSlideshow();
           slideshow(false, false);
       }
   
-      if ((touchendX > touchstartX) && (touchendX - touchstartX > 20)) {
+      if ((touchendX > touchstartX) && (touchendX - touchstartX > 30)) {
           console.log('Swiped Right');
           setSlideshow();
           slideshow(false, true);
       }
-  
+
       if (touchendY < touchstartY) {
           console.log('Swiped Up');
       }

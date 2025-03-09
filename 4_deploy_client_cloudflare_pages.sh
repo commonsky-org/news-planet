@@ -1,1 +1,1 @@
-npx wrangler pages deploy ./public/map --project-name news-planet
+npx wrangler pages deploy ./public/map --project-name news-plnet
